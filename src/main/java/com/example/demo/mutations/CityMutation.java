@@ -10,7 +10,6 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 public class CityMutation implements GraphQLMutationResolver {
-
     private final CityRepository cityRepository;
 
     public CityMutation(CityRepository cityRepository) {
@@ -23,7 +22,10 @@ public class CityMutation implements GraphQLMutationResolver {
 
     public CompletableFuture<City> updateCity(String id, City city){
         return cityRepository.findById(id)
-                .flatMap(cityRepository::save).toFuture();
+                .flatMap(c -> {
+                    city.setId(id);
+                    return cityRepository.save(city);
+                }).toFuture();
     }
 
     public CompletableFuture<Boolean> deleteCity(String id) {
