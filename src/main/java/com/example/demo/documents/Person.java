@@ -1,6 +1,7 @@
 package com.example.demo.documents;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Person {
     private String lastName;
     private Address address;
     private List<String> booksId = new ArrayList<>();
+    @Transient
     private List<Book> books = new ArrayList<>();
 
     public Person() {
