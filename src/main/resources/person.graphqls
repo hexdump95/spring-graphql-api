@@ -1,0 +1,44 @@
+extend type Query {
+    persons: [Person]
+    person(id: String): Person
+}
+
+extend type Mutation {
+    createPerson(person: PersonCreate): Person
+    updatePerson(id: String, person: PersonUpdate): Person
+    deletePerson(id: String): Boolean
+}
+
+input PersonCreate {
+    id: String
+    firstName: String
+    lastName: String
+    address: AddressCreate
+}
+
+input AddressCreate {
+    street: String
+    number: Int
+    cityId: String
+}
+
+input PersonUpdate {
+    name: String!
+    firstName: String
+    lastName: String
+    address: AddressCreate
+}
+
+type Person {
+    id: String
+    firstName: String
+    lastName: String
+    address: Address
+}
+
+type Address {
+    street: String
+    number: Int
+    cityId: String
+    city: City
+}
