@@ -14,15 +14,18 @@ public class Person {
     private String firstName;
     private String lastName;
     private Address address;
+    private List<String> booksId = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
     public Person() {
     }
 
-    public Person(String id, String firstName, String lastName, Address address) {
+    public Person(String id, String firstName, String lastName, Address address, List<String> booksId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.booksId = booksId;
     }
 
     public String getId() {
@@ -57,17 +60,33 @@ public class Person {
         this.address = address;
     }
 
+    public List<String> getBooksId() {
+        return booksId;
+    }
+
+    public void setBooksId(List<String> booksId) {
+        this.booksId = booksId;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(address, person.address);
+        return Objects.equals(id, person.id) && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(address, person.address) && Objects.equals(booksId, person.booksId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address);
+        return Objects.hash(id, firstName, lastName, address, booksId);
     }
 
     @Override
@@ -77,6 +96,7 @@ public class Person {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address=" + address +
+                ", booksId=" + booksId +
                 '}';
     }
 }

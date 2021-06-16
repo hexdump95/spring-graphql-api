@@ -1,6 +1,7 @@
 package com.example.demo.mutations;
 
 import com.example.demo.documents.Person;
+import com.example.demo.repositories.BookRepository;
 import com.example.demo.repositories.CityRepository;
 import com.example.demo.repositories.PersonRepository;
 import graphql.kickstart.tools.GraphQLMutationResolver;
@@ -13,10 +14,12 @@ import java.util.concurrent.CompletableFuture;
 public class PersonMutation implements GraphQLMutationResolver {
     private final PersonRepository personRepository;
     private final CityRepository cityRepository;
+    private final BookRepository bookRepository;
 
-    public PersonMutation(PersonRepository personRepository, CityRepository cityRepository) {
+    public PersonMutation(PersonRepository personRepository, CityRepository cityRepository, BookRepository bookRepository) {
         this.personRepository = personRepository;
         this.cityRepository = cityRepository;
+        this.bookRepository = bookRepository;
     }
 
     public CompletableFuture<Person> createPerson(Person person){
@@ -27,8 +30,11 @@ public class PersonMutation implements GraphQLMutationResolver {
                                     p.getAddress().setCity(c);
                                     return p;
                                 })
-                )
-                .toFuture();
+                ).zipWith(bookRepository.findAllById(person.getBooksId()).collectList(),
+                        (p, b) -> {
+                            p.setBooks(b);
+                            return p;
+                        }).toFuture();
     }
 
     public CompletableFuture<Person> updatePerson(String id, Person person){

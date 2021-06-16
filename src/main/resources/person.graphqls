@@ -14,6 +14,7 @@ input PersonCreate {
     firstName: String
     lastName: String
     address: AddressCreate
+    booksId: [String]
 }
 
 input AddressCreate {
@@ -34,6 +35,8 @@ type Person {
     firstName: String
     lastName: String
     address: Address
+    booksId: [String]
+    books: [Book]
 }
 
 type Address {
