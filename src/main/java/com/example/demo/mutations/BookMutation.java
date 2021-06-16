@@ -1,6 +1,7 @@
 package com.example.demo.mutations;
 
 import com.example.demo.documents.Book;
+import com.example.demo.repositories.AuthorRepository;
 import com.example.demo.repositories.BookRepository;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import org.springframework.stereotype.Component;
@@ -11,13 +12,21 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class BookMutation implements GraphQLMutationResolver {
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
 
-    public BookMutation(BookRepository bookRepository) {
+    public BookMutation(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
 
     public CompletableFuture<Book> createBook(Book book){
-        return bookRepository.save(book).toFuture();
+        return bookRepository.save(book)
+                .zipWith(authorRepository.findAllById(book.getAuthorsId()).collectList(),
+                        (b, a) -> {
+                            b.setAuthors(a);
+                            return b;
+                        })
+                .toFuture();
     }
 
     public CompletableFuture<Book> updateBook(String id, Book book){
