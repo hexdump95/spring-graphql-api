@@ -3,32 +3,26 @@ package com.example.demo.documents;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.Objects;
 
 @Document
 public class Author {
-    @Id
-    private String id;
     private String firstName;
     private String lastName;
     private String biography;
+    private Address address;
+    private List<Book> books;
 
     public Author() {
     }
 
-    public Author(String id, String firstName, String lastName, String biography) {
-        this.id = id;
+    public Author(String firstName, String lastName, String biography, Address address, List<Book> books) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.biography = biography;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.address = address;
+        this.books = books;
     }
 
     public String getFirstName() {
@@ -55,26 +49,43 @@ public class Author {
         this.biography = biography;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return Objects.equals(id, author.id) && Objects.equals(firstName, author.firstName) && Objects.equals(lastName, author.lastName) && Objects.equals(biography, author.biography);
+        return Objects.equals(firstName, author.firstName) && Objects.equals(lastName, author.lastName) && Objects.equals(biography, author.biography) && Objects.equals(address, author.address) && Objects.equals(books, author.books);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, biography);
+        return Objects.hash(firstName, lastName, biography, address, books);
     }
 
     @Override
     public String toString() {
         return "Author{" +
-                "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", biography='" + biography + '\'' +
+                ", address=" + address +
+                ", books=" + books +
                 '}';
     }
 }

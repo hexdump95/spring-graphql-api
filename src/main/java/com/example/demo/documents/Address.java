@@ -1,38 +1,24 @@
 package com.example.demo.documents;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Objects;
 
 @Document
 public class Address {
-    @Id
-    private String id;
     private String street;
     private Integer number;
-    private String cityId;
-    @Transient
-    private City city;
+    private String city;
 
     public Address() {
     }
 
-    public Address(String id, String street, Integer number, String cityId, City city) {
-        this.id = id;
+    public Address(String street, Integer number, String city) {
         this.street = street;
         this.number = number;
-        this.cityId = cityId;
         this.city = city;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getStreet() {
@@ -51,19 +37,11 @@ public class Address {
         this.number = number;
     }
 
-    public String getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(String cityId) {
-        this.cityId = cityId;
-    }
-
-    public City getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
@@ -72,21 +50,20 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(id, address.id) && Objects.equals(street, address.street) && Objects.equals(number, address.number) && Objects.equals(cityId, address.cityId);
+        return Objects.equals(street, address.street) && Objects.equals(number, address.number) && Objects.equals(city, address.city);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, street, number, cityId);
+        return Objects.hash(street, number, city);
     }
 
     @Override
     public String toString() {
         return "Address{" +
-                "id='" + id + '\'' +
-                ", street='" + street + '\'' +
+                "street='" + street + '\'' +
                 ", number=" + number +
-                ", cityId='" + cityId + '\'' +
+                ", city='" + city + '\'' +
                 '}';
     }
 }

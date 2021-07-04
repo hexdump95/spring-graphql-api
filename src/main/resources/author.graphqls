@@ -14,6 +14,21 @@ input AuthorCreate {
     firstName: String!
     lastName: String!
     biography: String!
+    address: AddressCreate!
+    books: [BookCreate]!
+}
+
+input AddressCreate {
+    street: String
+    number: Int
+    city: String
+}
+
+input BookCreate {
+    title: String!
+    date: String!
+    pages: Int!
+    genre: String!
 }
 
 input AuthorUpdate {
@@ -27,4 +42,21 @@ type Author {
     firstName: String!
     lastName: String!
     biography: String!
+    address: Address
+    books: [Book]
+}
+
+type Address {
+    id: String
+    street: String
+    number: Int
+    city: String
+}
+
+type Book {
+    id: String
+    title: String
+    date: String
+    pages: Int
+    genre: String
 }
