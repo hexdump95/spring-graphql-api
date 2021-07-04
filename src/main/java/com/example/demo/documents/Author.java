@@ -8,6 +8,8 @@ import java.util.Objects;
 
 @Document
 public class Author {
+    @Id
+    private String id;
     private String firstName;
     private String lastName;
     private String biography;
@@ -17,12 +19,12 @@ public class Author {
     public Author() {
     }
 
-    public Author(String firstName, String lastName, String biography, Address address, List<Book> books) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.biography = biography;
-        this.address = address;
-        this.books = books;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -70,22 +72,24 @@ public class Author {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return Objects.equals(firstName, author.firstName) && Objects.equals(lastName, author.lastName) && Objects.equals(biography, author.biography) && Objects.equals(address, author.address) && Objects.equals(books, author.books);
+        return Objects.equals(id, author.id) && Objects.equals(firstName, author.firstName) && Objects.equals(lastName, author.lastName) && Objects.equals(biography, author.biography) && Objects.equals(address, author.address) && Objects.equals(books, author.books);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, biography, address, books);
+        return Objects.hash(id, firstName, lastName, biography, address, books);
     }
 
     @Override
     public String toString() {
         return "Author{" +
-                "firstName='" + firstName + '\'' +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", biography='" + biography + '\'' +
                 ", address=" + address +
                 ", books=" + books +
                 '}';
     }
+
 }

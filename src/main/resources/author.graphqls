@@ -47,14 +47,12 @@ type Author {
 }
 
 type Address {
-    id: String
     street: String
     number: Int
     city: String
 }
 
 type Book {
-    id: String
     title: String
     date: String
     pages: Int
